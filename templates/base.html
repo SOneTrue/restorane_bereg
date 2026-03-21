@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Ресторан "Берег"{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    //cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    //fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -50,7 +50,7 @@
 </head>
 <body class="font-body antialiased flex flex-col min-h-screen selection:bg-bereg-neon selection:text-white">
 
-    <!-- Django Messages (уведомления) -->
+    <!-- Django Messages -->
     {% if messages %}
     <div class="fixed top-20 right-4 z-50 space-y-2">
         {% for message in messages %}
@@ -69,20 +69,40 @@
                 <span class="text-bereg-neon">БЕРЕГ</span>
             </a>
             <nav class="hidden md:flex space-x-8">
-                <a href="{% url 'home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %} hover:text-bereg-neon transition duration-300 py-2 font-semibold text-sm uppercase tracking-wide">Главная</a>
-                <a href="{% url 'menu' %}" class="nav-link {% if request.resolver_match.url_name == 'menu' %}active{% endif %} hover:text-bereg-neon transition duration-300 py-2 font-semibold text-sm uppercase tracking-wide">Меню</a>
-                <a href="{% url 'reservation' %}" class="nav-link {% if request.resolver_match.url_name == 'reservation' %}active{% endif %} hover:text-bereg-neon transition duration-300 py-2 font-semibold text-sm uppercase tracking-wide">Бронь</a>
-                <a href="{% url 'contacts' %}" class="nav-link {% if request.resolver_match.url_name == 'contacts' %}active{% endif %} hover:text-bereg-neon transition duration-300 py-2 font-semibold text-sm uppercase tracking-wide">Контакты</a>
+                <a href="{% url 'home' %}"
+                   class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %} hover:text-bereg-neon transition duration-300 py-2 font-semibold text-sm uppercase tracking-wide">
+                   Главная
+                </a>
+                <a href="{% url 'news' %}"
+                   class="nav-link {% if request.resolver_match.url_name == 'news' or request.resolver_match.url_name == 'news_detail' %}active{% endif %} hover:text-bereg-neon transition duration-300 py-2 font-semibold text-sm uppercase tracking-wide">
+                   Новости
+                </a>
+                <a href="{% url 'menu' %}"
+                   class="nav-link {% if request.resolver_match.url_name == 'menu' or request.resolver_match.url_name == 'dish_detail' %}active{% endif %} hover:text-bereg-neon transition duration-300 py-2 font-semibold text-sm uppercase tracking-wide">
+                   Меню
+                </a>
+                <a href="{% url 'reservation' %}"
+                   class="nav-link {% if request.resolver_match.url_name == 'reservation' %}active{% endif %} hover:text-bereg-neon transition duration-300 py-2 font-semibold text-sm uppercase tracking-wide">
+                   Бронь
+                </a>
+                <a href="{% url 'contacts' %}"
+                   class="nav-link {% if request.resolver_match.url_name == 'contacts' %}active{% endif %} hover:text-bereg-neon transition duration-300 py-2 font-semibold text-sm uppercase tracking-wide">
+                   Контакты
+                </a>
             </nav>
-            <button class="md:hidden text-white focus:outline-none" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+            <button class="md:hidden text-white focus:outline-none"
+                    onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
                 <i class="fas fa-bars text-2xl"></i>
             </button>
         </div>
+
+        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-bereg-dark border-t border-gray-800">
-            <a href="{% url 'home' %}" class="block px-4 py-3 hover:bg-gray-900 text-bereg-neon border-l-4 border-bereg-neon">Главная</a>
-            <a href="{% url 'menu' %}" class="block px-4 py-3 hover:bg-gray-900">Меню</a>
-            <a href="{% url 'reservation' %}" class="block px-4 py-3 hover:bg-gray-900">Бронь столика</a>
-            <a href="{% url 'contacts' %}" class="block px-4 py-3 hover:bg-gray-900">Контакты</a>
+            <a href="{% url 'home' %}" class="block px-4 py-3 hover:bg-gray-900 {% if request.resolver_match.url_name == 'home' %}text-bereg-neon border-l-4 border-bereg-neon{% endif %}">Главная</a>
+            <a href="{% url 'news' %}" class="block px-4 py-3 hover:bg-gray-900 {% if request.resolver_match.url_name == 'news' or request.resolver_match.url_name == 'news_detail' %}text-bereg-neon border-l-4 border-bereg-neon{% endif %}">Новости</a>
+            <a href="{% url 'menu' %}" class="block px-4 py-3 hover:bg-gray-900 {% if request.resolver_match.url_name == 'menu' or request.resolver_match.url_name == 'dish_detail' %}text-bereg-neon border-l-4 border-bereg-neon{% endif %}">Меню</a>
+            <a href="{% url 'reservation' %}" class="block px-4 py-3 hover:bg-gray-900 {% if request.resolver_match.url_name == 'reservation' %}text-bereg-neon border-l-4 border-bereg-neon{% endif %}">Бронь столика</a>
+            <a href="{% url 'contacts' %}" class="block px-4 py-3 hover:bg-gray-900 {% if request.resolver_match.url_name == 'contacts' %}text-bereg-neon border-l-4 border-bereg-neon{% endif %}">Контакты</a>
         </div>
     </header>
 
@@ -103,6 +123,7 @@
                 </div>
                 <div class="flex space-x-8 text-sm font-bold uppercase tracking-wider text-gray-400">
                     <a href="{% url 'home' %}" class="hover:text-bereg-neon transition">Главная</a>
+                    <a href="{% url 'news' %}" class="hover:text-bereg-neon transition">Новости</a>
                     <a href="{% url 'menu' %}" class="hover:text-bereg-neon transition">Меню</a>
                     <a href="{% url 'reservation' %}" class="hover:text-bereg-neon transition">Бронь</a>
                     <a href="{% url 'contacts' %}" class="hover:text-bereg-neon transition">Контакты</a>

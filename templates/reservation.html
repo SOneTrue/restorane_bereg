@@ -20,33 +20,46 @@
         <div class="p-10 bg-bereg-dark">
             <form method="POST" action="{% url 'reservation' %}">
                 {% csrf_token %}
+
                 <div class="mb-5">
-                    abel class="block text-gray-500 text-xs font-bold uppercase mb-2">Ваше Имя</label>
-                    <input type="text" name="name" required class="w-full bg-bereg-gray border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-bereg-neon transition" placeholder="Иван">
+                    <label class="block text-gray-500 text-xs font-bold uppercase mb-2">Ваше Имя</label>
+                    <input type="text" name="name" required
+                           class="w-full bg-bereg-gray border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-bereg-neon transition"
+                           placeholder="Иван">
                 </div>
+
                 <div class="mb-5">
-                    abel class="block text-gray-500 text-xs font-bold uppercase mb-2">Телефон</label>
-                    <input type="tel" name="phone" required class="w-full bg-bereg-gray border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-bereg-neon transition" placeholder="+7 (___) ___-__-__">
+                    <label class="block text-gray-500 text-xs font-bold uppercase mb-2">Телефон</label>
+                    <input type="tel" name="phone" required
+                           class="w-full bg-bereg-gray border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-bereg-neon transition"
+                           placeholder="+7 (___) ___-__-__">
                 </div>
+
                 <div class="grid grid-cols-2 gap-4 mb-5">
                     <div>
-                        abel class="block text-gray-500 text-xs font-bold uppercase mb-2">Дата</label>
-                        <input type="date" name="date" required class="w-full bg-bereg-gray border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-bereg-neon transition">
+                        <label class="block text-gray-500 text-xs font-bold uppercase mb-2">Дата</label>
+                        <input type="date" name="date" required
+                               class="w-full bg-bereg-gray border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-bereg-neon transition">
                     </div>
                     <div>
-                        abel class="block text-gray-500 text-xs font-bold uppercase mb-2">Время</label>
-                        <input type="time" name="time" required class="w-full bg-bereg-gray border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-bereg-neon transition">
+                        <label class="block text-gray-500 text-xs font-bold uppercase mb-2">Время</label>
+                        <input type="time" name="time" required
+                               class="w-full bg-bereg-gray border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-bereg-neon transition">
                     </div>
                 </div>
+
                 <div class="mb-8">
-                    abel class="block text-gray-500 text-xs font-bold uppercase mb-2">Гостей</label>
-                    <select name="guests" class="w-full bg-bereg-gray border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-bereg-neon transition">
+                    <label class="block text-gray-500 text-xs font-bold uppercase mb-2">Гостей</label>
+                    <select name="guests"
+                            class="w-full bg-bereg-gray border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-bereg-neon transition">
                         <option value="2">2 Персоны</option>
                         <option value="4">3-4 Персоны</option>
                         <option value="5">Компания (5+)</option>
                     </select>
                 </div>
-                <button type="submit" class="w-full bg-bereg-neon text-white font-bold py-4 uppercase tracking-widest hover:bg-white hover:text-bereg-neon transition duration-300">
+
+                <button type="submit"
+                        class="w-full bg-bereg-neon text-white font-bold py-4 uppercase tracking-widest hover:bg-white hover:text-bereg-neon transition duration-300">
                     Подтвердить
                 </button>
             </form>

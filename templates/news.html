@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block title %}Ресторан "Берег" — Новости{% endblock %}
+
+{% block content %}
+<!-- Шапка страницы -->
+<div class="bg-bereg-gray py-20 text-center border-b border-gray-800">
+    <h1 class="text-5xl font-sans font-extrabold mb-4 uppercase tracking-tight">
+        Новости <span class="text-bereg-neon">Ресторана</span>
+    </h1>
+    <p class="text-gray-400 max-w-2xl mx-auto">Будьте в курсе всех событий, акций и обновлений нашего ресторана</p>
+</div>
+
+<div class="container mx-auto px-4 py-12">
+
+    <!-- Фильтры категорий -->
+    <div class="flex justify-center space-x-4 mb-16 flex-wrap gap-y-4">
+        <a href="{% url 'news' %}" class="px-8 py-3 {% if not current_category %}bg-bereg-neon text-white{% else %}bg-transparent border border-gray-700 text-gray-400 hover:border-bereg-neon hover:text-white{% endif %} font-bold uppercase tracking-wider transition duration-300">Все</a>
+        <a href="{% url 'news' %}?category=events" class="px-8 py-3 {% if current_category == 'events' %}bg-bereg-neon text-white{% else %}bg-transparent border border-gray-700 text-gray-400 hover:border-bereg-neon hover:text-white{% endif %} font-bold uppercase tracking-wider transition duration-300">События</a>
+        <a href="{% url 'news' %}?category=menu" class="px-8 py-3 {% if current_category == 'menu' %}bg-bereg-neon text-white{% else %}bg-transparent border border-gray-700 text-gray-400 hover:border-bereg-neon hover:text-white{% endif %} font-bold uppercase tracking-wider transition duration-300">Меню</a>
+        <a href="{% url 'news' %}?category=promo" class="px-8 py-3 {% if current_category == 'promo' %}bg-bereg-neon text-white{% else %}bg-transparent border border-gray-700 text-gray-400 hover:border-bereg-neon hover:text-white{% endif %} font-bold uppercase tracking-wider transition duration-300">Акции</a>
+        <a href="{% url 'news' %}?category=bar" class="px-8 py-3 {% if current_category == 'bar' %}bg-bereg-neon text-white{% else %}bg-transparent border border-gray-700 text-gray-400 hover:border-bereg-neon hover:text-white{% endif %} font-bold uppercase tracking-wider transition duration-300">Бар</a>
+    </div>
+
+    <!-- Главная новость -->
+    {% if featured_news %}
+    <div class="mb-16">
+        <h2 class="text-2xl font-bold mb-8 text-white flex items-center">
+            <i class="fas fa-star text-bereg-neon mr-3"></i>Главная новость
+        </h2>
+        <a href="{% url 'news_detail' featured_news.id %}" class="grid md:grid-cols-2 gap-0 bg-bereg-gray border border-gray-800 overflow-hidden hover:border-bereg-neon transition duration-300 block">
+            <div class="h-80 md:h-auto overflow-hidden">
+                {% if featured_news.image %}
+                    <img src="{{ featured_news.image.url }}" alt="{{ featured_news.title }}" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                {% else %}
+                    <div class="w-full h-full bg-gray-800 flex items-center justify-center text-gray-600">
+                        <i class="fas fa-newspaper text-6xl"></i>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="p-8 flex flex-col justify-center">
+                <div class="flex items-center gap-4 mb-4">
+                    <span class="bg-bereg-neon text-white text-xs font-bold px-3 py-1 uppercase">{{ featured_news.get_category_display }}</span>
+                    <span class="text-gray-400 text-sm"><i class="far fa-calendar mr-2"></i>{{ featured_news.created_at|date:"d F Y" }}</span>
+                </div>
+                <h3 class="text-3xl font-bold mb-4 text-white hover:text-bereg-neon transition">{{ featured_news.title }}</h3>
+                <p class="text-gray-400 mb-6 line-clamp-3">{{ featured_news.excerpt }}</p>
+                <div class="flex items-center text-bereg-neon font-bold uppercase tracking-wider">
+                    Читать далее <i class="fas fa-arrow-right ml-2"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endif %}
+
+    <!-- Сетка новостей -->
+    <div class="mb-16">
+        <h2 class="text-2xl font-bold mb-8 text-white">Все новости</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for article in news_list %}
+            <a href="{% url 'news_detail' article.id %}" class="bg-bereg-gray overflow-hidden group border border-gray-800 hover:border-bereg-neon transition duration-300 block">
+                <div class="h-48 overflow-hidden relative">
+                    {% if article.image %}
+                        <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                    {% else %}
+                        <div class="w-full h-full bg-gray-800 flex items-center justify-center text-gray-600">
+                            <i class="fas fa-newspaper text-4xl"></i>
+                        </div>
+                    {% endif %}
+                    <div class="absolute top-4 left-4 bg-bereg-neon text-white text-xs font-bold px-3 py-1 uppercase">
+                        {{ article.get_category_display }}
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center text-gray-500 text-xs mb-3">
+                        <i class="far fa-calendar mr-2"></i>{{ article.created_at|date:"d F Y" }}
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white group-hover:text-bereg-neon transition">{{ article.title }}</h3>
+                    <p class="text-gray-400 text-sm mb-4 line-clamp-2">{{ article.excerpt }}</p>
+                    <span class="text-bereg-neon text-sm font-bold uppercase">Читать далее &rarr;</span>
+                </div>
+            </a>
+            {% empty %}
+            <div class="col-span-3 text-center text-gray-500 py-16">
+                <i class="fas fa-newspaper text-5xl mb-4 block opacity-30"></i>
+                Новостей пока нет
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Подписка на новости -->
+    <div class="mt-8 bg-bereg-gray border border-gray-800 p-8 md:p-12">
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div>
+                <h3 class="text-2xl font-bold mb-4 text-white">Подпишитесь на новости</h3>
+                <p class="text-gray-400">Получайте информацию о новых блюдах, акциях и событиях первыми</p>
+            </div>
+            <div class="flex flex-col md:flex-row gap-4">
+                <input type="email" placeholder="Ваш email"
+                       class="flex-1 bg-bereg-dark border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-bereg-neon transition">
+                <button class="bg-bereg-neon text-white px-8 py-3 font-bold uppercase tracking-wider hover:bg-white hover:text-bereg-neon transition duration-300">
+                    Подписаться
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

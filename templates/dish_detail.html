@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block title %}{{ dish.name }} — Ресторан "Берег"{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-16 max-w-5xl">
+
+    <!-- Хлебные крошки -->
+    <nav class="flex items-center space-x-2 text-sm text-gray-500 mb-10">
+        <a href="{% url 'home' %}" class="hover:text-bereg-neon transition">Главная</a>
+        <span>/</span>
+        <a href="{% url 'menu' %}" class="hover:text-bereg-neon transition">Меню</a>
+        <span>/</span>
+        <span class="text-gray-300">{{ dish.name }}</span>
+    </nav>
+
+    <!-- Основной блок блюда -->
+    <div class="grid md:grid-cols-2 gap-0 bg-bereg-gray border border-gray-800">
+
+        <!-- Изображение -->
+        <div class="relative overflow-hidden h-96 md:h-auto">
+            {% if dish.image %}
+                <img src="{{ dish.image.url }}" alt="{{ dish.name }}" class="w-full h-full object-cover">
+            {% else %}
+                <div class="w-full h-full bg-gray-800 flex items-center justify-center text-gray-600 min-h-80">
+                    <i class="fas fa-utensils text-6xl"></i>
+                </div>
+            {% endif %}
+            <!-- Цена поверх фото -->
+            <div class="absolute bottom-0 left-0 bg-bereg-neon text-white px-6 py-3 text-2xl font-bold">
+                {{ dish.price }} ₽
+            </div>
+            {% if dish.is_hit %}
+            <div class="absolute top-4 right-4 border border-bereg-neon text-bereg-neon text-xs font-bold px-3 py-1 uppercase bg-bereg-dark/80">
+                ХИТ
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Информация -->
+        <div class="p-8 md:p-10 flex flex-col justify-between">
+            <div>
+                <!-- Категория -->
+                <span class="text-bereg-neon text-xs font-bold uppercase tracking-widest mb-3 block">
+                    {{ dish.category.name }}
+                </span>
+
+                <!-- Название -->
+                <h1 class="text-3xl md:text-4xl font-sans font-extrabold text-white mb-6 leading-tight">
+                    {{ dish.name }}
+                </h1>
+
+                <!-- Описание -->
+                <p class="text-gray-300 text-lg leading-relaxed mb-8">
+                    {{ dish.description }}
+                </p>
+
+                <!-- Состав (если есть) -->
+                {% if dish.ingredients %}
+                <div class="mb-8">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-gray-500 mb-3">Состав</h3>
+                    <p class="text-gray-400 text-sm">{{ dish.ingredients }}</p>
+                </div>
+                {% endif %}
+
+                <!-- Характеристики -->
+                <div class="grid grid-cols-3 gap-4 mb-8 border border-gray-800 p-4">
+                    {% if dish.weight %}
+                    <div class="text-center">
+                        <div class="text-bereg-neon font-bold text-lg">{{ dish.weight }}г</div>
+                        <div class="text-gray-500 text-xs uppercase">Вес</div>
+                    </div>
+                    {% endif %}
+                    {% if dish.calories %}
+                    <div class="text-center">
+                        <div class="text-bereg-neon font-bold text-lg">{{ dish.calories }}</div>
+                        <div class="text-gray-500 text-xs uppercase">Ккал</div>
+                    </div>
+                    {% endif %}
+                    <div class="text-center">
+                        <div class="text-bereg-neon font-bold text-lg">{{ dish.price }} ₽</div>
+                        <div class="text-gray-500 text-xs uppercase">Цена</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Кнопки -->
+            <div class="space-y-3">
+                <a href="{% url 'reservation' %}" class="block w-full text-center bg-bereg-neon text-white font-bold py-4 uppercase tracking-widest hover:bg-white hover:text-bereg-neon transition duration-300">
+                    <i class="fas fa-calendar-check mr-2"></i> Забронировать столик
+                </a>
+                <a href="{% url 'menu' %}" class="block w-full text-center border border-gray-600 text-gray-400 py-4 uppercase text-xs font-bold tracking-widest hover:border-white hover:text-white transition duration-300">
+                    <i class="fas fa-arrow-left mr-2"></i> Вернуться в меню
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Похожие блюда -->
+    {% if related_dishes %}
+    <div class="mt-16">
+        <h2 class="text-2xl font-bold mb-8 text-white flex items-center">
+            <span class="w-8 h-1 bg-bereg-neon mr-4 inline-block"></span>
+            Также в меню
+        </h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            {% for related in related_dishes %}
+            <a href="{% url 'dish_detail' related.id %}" class="bg-bereg-gray overflow-hidden group border border-gray-800 hover:border-bereg-neon transition duration-300 block">
+                <div class="h-48 overflow-hidden relative">
+                    {% if related.image %}
+                        <img src="{{ related.image.url }}" alt="{{ related.name }}" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                    {% else %}
+                        <div class="w-full h-full bg-gray-800 flex items-center justify-center text-gray-600">
+                            <i class="fas fa-utensils text-3xl"></i>
+                        </div>
+                    {% endif %}
+                    <div class="absolute bottom-0 right-0 bg-bereg-neon text-white px-3 py-1 font-bold">
+                        {{ related.price }} ₽
+                    </div>
+                </div>
+                <div class="p-5">
+                    <h3 class="text-lg font-bold text-white group-hover:text-bereg-neon transition mb-1">{{ related.name }}</h3>
+                    <p class="text-gray-400 text-sm line-clamp-2">{{ related.description }}</p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

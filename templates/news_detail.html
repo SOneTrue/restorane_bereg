@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}{{ article.title }} — Ресторан "Берег"{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-16 max-w-4xl">
+
+    <!-- Хлебные крошки -->
+    <nav class="flex items-center space-x-2 text-sm text-gray-500 mb-10">
+        <a href="{% url 'home' %}" class="hover:text-bereg-neon transition">Главная</a>
+        <span>/</span>
+        <a href="{% url 'news' %}" class="hover:text-bereg-neon transition">Новости</a>
+        <span>/</span>
+        <span class="text-gray-300">{{ article.title|truncatechars:40 }}</span>
+    </nav>
+
+    <!-- Категория и дата -->
+    <div class="flex items-center gap-4 mb-6">
+        <span class="bg-bereg-neon text-white text-xs font-bold px-3 py-1 uppercase">
+            {{ article.get_category_display }}
+        </span>
+        <span class="text-gray-500 text-sm">
+            <i class="far fa-calendar mr-2"></i>{{ article.created_at|date:"d F Y" }}
+        </span>
+    </div>
+
+    <!-- Заголовок -->
+    <h1 class="text-4xl md:text-5xl font-sans font-extrabold text-white mb-8 leading-tight">
+        {{ article.title }}
+    </h1>
+
+    <!-- Изображение -->
+    {% if article.image %}
+    <div class="w-full h-80 overflow-hidden mb-10 border border-gray-800">
+        <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-full object-cover">
+    </div>
+    {% endif %}
+
+    <!-- Текст статьи -->
+    <div class="prose prose-invert max-w-none text-gray-300 space-y-5 text-lg leading-relaxed mb-12">
+        {{ article.content|linebreaks }}
+    </div>
+
+    <!-- Разделитель -->
+    <div class="border-t border-gray-800 my-12"></div>
+
+    <!-- Навигация назад -->
+    <div class="flex items-center justify-between">
+        <a href="{% url 'news' %}" class="flex items-center gap-3 text-gray-400 hover:text-bereg-neon transition font-bold uppercase tracking-wider text-sm">
+            <i class="fas fa-arrow-left"></i> Все новости
+        </a>
+        <a href="{% url 'reservation' %}" class="bg-bereg-neon text-white px-8 py-3 font-bold uppercase tracking-wider hover:bg-white hover:text-bereg-neon transition duration-300">
+            Забронировать столик
+        </a>
+    </div>
+
+</div>
+{% endblock %}
