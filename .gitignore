@@ -1,0 +1,58 @@
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+
+# ===== Django =====
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+/media/
+/staticfiles/
+
+# ===== Виртуальное окружение =====
+.venv/
+venv/
+env/
+ENV/
+
+# ===== Секреты =====
+.env
+.env.local
+.env.production
+*.key
+*.pem
+
+# ===== PyCharm / IDE =====
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+
+# ===== Windows =====
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# ===== Миграции (по желанию) =====
+# Раскомментируй, если не хочешь коммитить миграции:
+# */migrations/*.py
+# !*/migrations/__init__.py
+
+# ===== Сборка / Дистрибутив =====
+dist/
+build/
+*.egg-info/
+.eggs/
+
+# ===== Тесты и покрытие =====
+.coverage
+htmlcov/
+.pytest_cache/
