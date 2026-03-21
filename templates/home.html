@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Ресторан "Берег" — Главная{% endblock %}
+
+{% block content %}
+<!-- Hero -->
+<div class="relative h-[600px] w-full overflow-hidden">
+    <img src="https://image.qwenlm.ai/public_source/76d0b6b1-bf04-41d4-9af3-b80bdfc992ab/1c6f3eb37-58a5-4af7-a173-e3016a88df2b.png" alt="Интерьер ресторана" class="w-full h-full object-cover">
+    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+        <div class="text-center text-white px-4">
+            <h1 class="text-5xl md:text-7xl font-serif font-bold mb-4 drop-shadow-lg">Ресторан "Берег"</h1>
+            <p class="text-xl md:text-2xl mb-8 font-light tracking-wide drop-shadow-md">Вкус, вдохновленный морем</p>
+            <a href="{% url 'reservation' %}" class="bg-bereg-gold text-bereg-dark px-8 py-3 rounded-full font-bold hover:bg-white transition duration-300 transform hover:scale-105 shadow-lg">
+                Забронировать столик
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- News -->
+<div class="container mx-auto px-4 py-16">
+    <div class="text-center mb-12">
+        <h2 class="text-3xl font-serif font-bold text-bereg-dark mb-2">Новости и События</h2>
+        <div class="w-24 h-1 bg-bereg-gold mx-auto"></div>
+    </div>
+    <div class="grid md:grid-cols-3 gap-8">
+        {% for event in events %}
+        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300">
+            {% if event.image %}
+            <img src="{{ event.image.url }}" alt="{{ event.title }}" class="w-full h-48 object-cover">
+            {% endif %}
+            <div class="p-6">
+                <span class="text-bereg-gold text-sm font-bold uppercase">{{ event.category }}</span>
+                <h3 class="text-xl font-bold mt-2 mb-3">{{ event.title }}</h3>
+                <p class="text-gray-600 mb-4">{{ event.description }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
