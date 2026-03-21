@@ -6,60 +6,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Ресторан "Берег"{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    //cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    //fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'bereg-dark': '#1a2a3a',
-                        'bereg-gold': '#c5a065',
-                        'bereg-sand': '#f4f1ea',
-                        'bereg-blue': '#2c5f7c',
+                        'bereg-dark': '#0f0f0f',
+                        'bereg-neon': '#ff0055',
+                        'bereg-brick': '#8a3324',
+                        'bereg-warm': '#ffcc00',
+                        'bereg-gray': '#1a1a1a',
                     },
                     fontFamily: {
-                        serif: ['"Playfair Display"', 'serif'],
-                        sans: ['"Lato"', 'sans-serif'],
+                        sans: ['"Montserrat"', 'sans-serif'],
+                        body: ['"Roboto"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'neon': '0 0 10px #ff0055, 0 0 20px #ff0055',
+                        'neon-text': '0 0 5px #ff0055, 0 0 10px #ff0055',
                     }
                 }
             }
         }
     </script>
     <style>
-        body { background-color: #f4f1ea; color: #1a2a3a; }
+        body { background-color: #0f0f0f; color: #ffffff; }
         .fade-in { animation: fadeIn 0.5s ease-in-out; }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            to   { opacity: 1; transform: translateY(0); }
         }
-        .nav-link.active { color: #c5a065; border-bottom: 2px solid #c5a065; }
+        .nav-link.active {
+            color: #ff0055;
+            text-shadow: 0 0 8px rgba(255, 0, 85, 0.6);
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f0f0f; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ff0055; }
     </style>
-    {% block extra_head %}{% endblock %}
 </head>
-<body class="font-sans antialiased flex flex-col min-h-screen">
+<body class="font-body antialiased flex flex-col min-h-screen selection:bg-bereg-neon selection:text-white">
+
+    <!-- Django Messages (уведомления) -->
+    {% if messages %}
+    <div class="fixed top-20 right-4 z-50 space-y-2">
+        {% for message in messages %}
+        <div class="bg-bereg-neon text-white px-6 py-3 shadow-neon font-bold text-sm uppercase tracking-wider flex items-center gap-3">
+            <i class="fas fa-check-circle"></i> {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 
     <!-- Header -->
-    <header class="bg-bereg-dark text-white sticky top-0 z-50 shadow-lg">
+    <header class="bg-bereg-dark/90 backdrop-blur-md text-white sticky top-0 z-50 border-b border-gray-800">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="{% url 'home' %}" class="text-2xl font-serif font-bold text-bereg-gold tracking-widest">
-                <i class="fas fa-anchor mr-2"></i>БЕРЕГ
+            <a href="{% url 'home' %}" class="text-2xl font-sans font-extrabold tracking-widest flex items-center gap-2">
+                <span class="text-white">РЕСТОРАН</span>
+                <span class="text-bereg-neon">БЕРЕГ</span>
             </a>
             <nav class="hidden md:flex space-x-8">
-                <a href="{% url 'home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% else %}text-white{% endif %} hover:text-bereg-gold transition duration-300 py-2">Главная</a>
-                <a href="{% url 'menu' %}" class="nav-link {% if request.resolver_match.url_name == 'menu' %}active{% else %}text-white{% endif %} hover:text-bereg-gold transition duration-300 py-2">Меню</a>
-                <a href="{% url 'reservation' %}" class="nav-link {% if request.resolver_match.url_name == 'reservation' %}active{% else %}text-white{% endif %} hover:text-bereg-gold transition duration-300 py-2">Бронь</a>
-                <a href="{% url 'contacts' %}" class="nav-link {% if request.resolver_match.url_name == 'contacts' %}active{% else %}text-white{% endif %} hover:text-bereg-gold transition duration-300 py-2">Контакты</a>
+                <a href="{% url 'home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %} hover:text-bereg-neon transition duration-300 py-2 font-semibold text-sm uppercase tracking-wide">Главная</a>
+                <a href="{% url 'menu' %}" class="nav-link {% if request.resolver_match.url_name == 'menu' %}active{% endif %} hover:text-bereg-neon transition duration-300 py-2 font-semibold text-sm uppercase tracking-wide">Меню</a>
+                <a href="{% url 'reservation' %}" class="nav-link {% if request.resolver_match.url_name == 'reservation' %}active{% endif %} hover:text-bereg-neon transition duration-300 py-2 font-semibold text-sm uppercase tracking-wide">Бронь</a>
+                <a href="{% url 'contacts' %}" class="nav-link {% if request.resolver_match.url_name == 'contacts' %}active{% endif %} hover:text-bereg-neon transition duration-300 py-2 font-semibold text-sm uppercase tracking-wide">Контакты</a>
             </nav>
-            <button class="md:hidden text-bereg-gold" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+            <button class="md:hidden text-white focus:outline-none" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
                 <i class="fas fa-bars text-2xl"></i>
             </button>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-bereg-dark border-t border-gray-700">
-            <a href="{% url 'home' %}" class="block px-4 py-3 hover:bg-gray-800 text-bereg-gold">Главная</a>
-            <a href="{% url 'menu' %}" class="block px-4 py-3 hover:bg-gray-800">Меню</a>
-            <a href="{% url 'reservation' %}" class="block px-4 py-3 hover:bg-gray-800">Бронь столика</a>
-            <a href="{% url 'contacts' %}" class="block px-4 py-3 hover:bg-gray-800">Контакты</a>
+        <div id="mobile-menu" class="hidden md:hidden bg-bereg-dark border-t border-gray-800">
+            <a href="{% url 'home' %}" class="block px-4 py-3 hover:bg-gray-900 text-bereg-neon border-l-4 border-bereg-neon">Главная</a>
+            <a href="{% url 'menu' %}" class="block px-4 py-3 hover:bg-gray-900">Меню</a>
+            <a href="{% url 'reservation' %}" class="block px-4 py-3 hover:bg-gray-900">Бронь столика</a>
+            <a href="{% url 'contacts' %}" class="block px-4 py-3 hover:bg-gray-900">Контакты</a>
         </div>
     </header>
 
@@ -69,16 +92,25 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-bereg-dark text-white py-8 mt-auto">
-        <div class="container mx-auto px-4 text-center">
-            <div class="text-2xl font-serif font-bold text-bereg-gold mb-4">БЕРЕГ</div>
-            <div class="flex justify-center space-x-6 mb-6 text-sm text-gray-400">
-                <a href="{% url 'home' %}" class="hover:text-white">Главная</a>
-                <a href="{% url 'menu' %}" class="hover:text-white">Меню</a>
-                <a href="{% url 'reservation' %}" class="hover:text-white">Бронь</a>
-                <a href="{% url 'contacts' %}" class="hover:text-white">Контакты</a>
+    <footer class="bg-black text-white py-12 mt-auto border-t border-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0 text-center md:text-left">
+                    <div class="text-3xl font-sans font-extrabold tracking-widest mb-2">
+                        <span class="text-white">БЕРЕГ</span>
+                    </div>
+                    <p class="text-gray-500 text-sm">Ресторан современной кухни</p>
+                </div>
+                <div class="flex space-x-8 text-sm font-bold uppercase tracking-wider text-gray-400">
+                    <a href="{% url 'home' %}" class="hover:text-bereg-neon transition">Главная</a>
+                    <a href="{% url 'menu' %}" class="hover:text-bereg-neon transition">Меню</a>
+                    <a href="{% url 'reservation' %}" class="hover:text-bereg-neon transition">Бронь</a>
+                    <a href="{% url 'contacts' %}" class="hover:text-bereg-neon transition">Контакты</a>
+                </div>
             </div>
-            <p class="text-gray-500 text-sm">&copy; 2025 Ресторан "Берег". Все права защищены.</p>
+            <div class="border-t border-gray-900 mt-8 pt-8 text-center text-gray-600 text-xs">
+                &copy; 2025 Ресторан "Берег". Все права защищены.
+            </div>
         </div>
     </footer>
 

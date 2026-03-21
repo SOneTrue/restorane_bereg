@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Ресторан "Берег" — Бронирование{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-16 max-w-5xl">
+    <div class="grid md:grid-cols-2 gap-0 bg-bereg-gray border border-gray-800 shadow-2xl">
+        <!-- Левая сторона -->
+        <div class="p-10 flex flex-col justify-center border-r border-gray-800 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-bereg-neon to-purple-600"></div>
+            <h2 class="text-3xl font-sans font-bold mb-6 text-white">Забронировать <br/><span class="text-bereg-neon">Столик</span></h2>
+            <p class="text-gray-400 mb-8">Оставьте заявку, и мы подтвердим бронь в течение 15 минут.</p>
+            <div class="space-y-6">
+                <div class="flex items-center text-gray-300"><i class="fas fa-clock w-8 text-bereg-neon"></i><span>Ежедневно с 12:00 до 00:00</span></div>
+                <div class="flex items-center text-gray-300"><i class="fas fa-phone w-8 text-bereg-neon"></i><span>+7 (999) 000-00-00</span></div>
+                <div class="flex items-center text-gray-300"><i class="fas fa-wifi w-8 text-bereg-neon"></i><span>Бесплатный Wi-Fi</span></div>
+            </div>
+        </div>
+
+        <!-- Правая сторона — форма -->
+        <div class="p-10 bg-bereg-dark">
+            <form method="POST" action="{% url 'reservation' %}">
+                {% csrf_token %}
+                <div class="mb-5">
+                    abel class="block text-gray-500 text-xs font-bold uppercase mb-2">Ваше Имя</label>
+                    <input type="text" name="name" required class="w-full bg-bereg-gray border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-bereg-neon transition" placeholder="Иван">
+                </div>
+                <div class="mb-5">
+                    abel class="block text-gray-500 text-xs font-bold uppercase mb-2">Телефон</label>
+                    <input type="tel" name="phone" required class="w-full bg-bereg-gray border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-bereg-neon transition" placeholder="+7 (___) ___-__-__">
+                </div>
+                <div class="grid grid-cols-2 gap-4 mb-5">
+                    <div>
+                        abel class="block text-gray-500 text-xs font-bold uppercase mb-2">Дата</label>
+                        <input type="date" name="date" required class="w-full bg-bereg-gray border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-bereg-neon transition">
+                    </div>
+                    <div>
+                        abel class="block text-gray-500 text-xs font-bold uppercase mb-2">Время</label>
+                        <input type="time" name="time" required class="w-full bg-bereg-gray border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-bereg-neon transition">
+                    </div>
+                </div>
+                <div class="mb-8">
+                    abel class="block text-gray-500 text-xs font-bold uppercase mb-2">Гостей</label>
+                    <select name="guests" class="w-full bg-bereg-gray border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-bereg-neon transition">
+                        <option value="2">2 Персоны</option>
+                        <option value="4">3-4 Персоны</option>
+                        <option value="5">Компания (5+)</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-bereg-neon text-white font-bold py-4 uppercase tracking-widest hover:bg-white hover:text-bereg-neon transition duration-300">
+                    Подтвердить
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
