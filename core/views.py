@@ -1,34 +1,58 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from .models import Dish, Category, NewsArticle
+
 
 def home(request):
-    return render(request, 'home.html')
+    news_preview = NewsArticle.objects.filter(is_published=True)[:3]
+    return render(request, 'home.html', {'news_preview': news_preview})
+
 
 def news(request):
     category = request.GET.get('category')
-    # Временные данные — потом заменим на модели из БД
+    articles = NewsArticle.objects.filter(is_published=True)
+    if category:
+        articles = articles.filter(category=category)
+
+    featured = NewsArticle.objects.filter(is_published=True, is_featured=True).first()
+
     return render(request, 'news.html', {
-        'news_list': [],
-        'featured_news': None,
+        'news_list': articles,
+        'featured_news': featured,
         'current_category': category,
     })
 
+
 def news_detail(request, pk):
-    # article = get_object_or_404(NewsArticle, pk=pk)  # раскомментировать после моделей
-    return render(request, 'news_detail.html', {
-        # 'article': article
-    })
+    article = get_object_or_404(NewsArticle, pk=pk, is_published=True)
+    return render(request, 'news_detail.html', {'article': article})
+
 
 def menu(request):
-    return render(request, 'menu.html')
+    category_slug = request.GET.get('category')
+    categories = Category.objects.all()
+    dishes = Dish.objects.filter(is_available=True).select_related('category')
+    if category_slug:
+        dishes = dishes.filter(category__slug=category_slug)
+
+    return render(request, 'menu.html', {
+        'dishes': dishes,
+        'categories': categories,
+        'current_category': category_slug,
+    })
+
 
 def dish_detail(request, pk):
-    # dish = get_object_or_404(Dish, pk=pk)
-    # related_dishes = Dish.objects.filter(category=dish.category).exclude(pk=pk)[:3]
+    dish = get_object_or_404(Dish, pk=pk, is_available=True)
+    related_dishes = Dish.objects.filter(
+        category=dish.category, is_available=True
+    ).exclude(pk=pk)[:3]
+
     return render(request, 'dish_detail.html', {
-        # 'dish': dish,
-        # 'related_dishes': related_dishes,
+        'dish': dish,
+        'related_dishes': related_dishes,
     })
+
 
 def reservation(request):
     if request.method == 'POST':
@@ -36,6 +60,7 @@ def reservation(request):
         messages.success(request, f'Спасибо, {name}! Ваша заявка принята.')
         return redirect('home')
     return render(request, 'reservation.html')
+
 
 def contacts(request):
     return render(request, 'contacts.html')

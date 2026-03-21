@@ -2,24 +2,29 @@
 {% block title %}Ресторан "Берег" — Главная{% endblock %}
 
 {% block content %}
+
 <!-- Hero -->
 <div class="relative h-[80vh] w-full overflow-hidden">
-    <img src="https://image.qwenlm.ai/public_source/76d0b6b1-bf04-41d4-9af3-b80bdfc992ab/1c6f3eb37-58a5-4af7-a173-e3016a88df2b.png" alt="Ресторан Берег" class="w-full h-full object-cover">
+    <img src="https://image.qwenlm.ai/public_source/76d0b6b1-bf04-41d4-9af3-b80bdfc992ab/1c6f3eb37-58a5-4af7-a173-e3016a88df2b.png"
+         alt="Ресторан Берег" class="w-full h-full object-cover">
     <div class="absolute inset-0 bg-gradient-to-t from-bereg-dark via-bereg-dark/50 to-transparent"></div>
     <div class="absolute inset-0 flex items-center justify-center">
         <div class="text-center text-white px-4 max-w-4xl">
             <h2 class="text-bereg-neon font-bold tracking-[0.2em] mb-2 uppercase text-sm md:text-base animate-pulse">Добро пожаловать</h2>
             <h1 class="text-5xl md:text-8xl font-sans font-extrabold mb-6 drop-shadow-lg leading-tight">
-                ВКУС <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">И АТМОСФЕРА</span>
+                ВКУС <br/>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">И АТМОСФЕРА</span>
             </h1>
             <p class="text-gray-300 text-lg md:text-xl mb-10 font-light max-w-2xl mx-auto">
                 Современная кухня в уютном пространстве с уникальной неоновой эстетикой.
             </p>
             <div class="flex flex-col md:flex-row gap-4 justify-center">
-                <a href="{% url 'reservation' %}" class="bg-bereg-neon text-white px-8 py-4 font-bold hover:bg-white hover:text-bereg-neon transition duration-300 shadow-neon uppercase tracking-wider">
+                <a href="{% url 'reservation' %}"
+                   class="bg-bereg-neon text-white px-8 py-4 font-bold hover:bg-white hover:text-bereg-neon transition duration-300 shadow-neon uppercase tracking-wider">
                     Забронировать
                 </a>
-                <a href="{% url 'menu' %}" class="border border-white text-white px-8 py-4 font-bold hover:bg-white hover:text-black transition duration-300 uppercase tracking-wider">
+                <a href="{% url 'menu' %}"
+                   class="border border-white text-white px-8 py-4 font-bold hover:bg-white hover:text-black transition duration-300 uppercase tracking-wider">
                     Смотреть Меню
                 </a>
             </div>
@@ -27,43 +32,45 @@
     </div>
 </div>
 
-<!-- News -->
+<!-- Новости из БД -->
 <div class="container mx-auto px-4 py-20">
     <div class="flex justify-between items-end mb-12 border-b border-gray-800 pb-4">
         <div>
             <h2 class="text-3xl font-sans font-bold text-white">Новости</h2>
             <div class="w-16 h-1 bg-bereg-neon mt-2"></div>
         </div>
-        <a href="#" class="text-gray-400 hover:text-bereg-neon transition text-sm uppercase font-bold">Все новости &rarr;</a>
+        <a href="{% url 'news' %}" class="text-gray-400 hover:text-bereg-neon transition text-sm uppercase font-bold">
+            Все новости &rarr;
+        </a>
     </div>
+
     <div class="grid md:grid-cols-3 gap-8">
-        <div class="group cursor-pointer">
+        {% for article in news_preview %}
+        <a href="{% url 'news_detail' article.id %}" class="group cursor-pointer block">
             <div class="overflow-hidden mb-4 relative h-64">
-                <img src="https://image.qwenlm.ai/public_source/76d0b6b1-bf04-41d4-9af3-b80bdfc992ab/16cbbb211-b868-41e6-8478-958ef6c5bcab.png" alt="Event" class="w-full h-full object-cover transition duration-500 group-hover:scale-110 group-hover:opacity-75">
-                <div class="absolute top-4 left-4 bg-bereg-neon text-white text-xs font-bold px-3 py-1 uppercase">Событие</div>
+                {% if article.image %}
+                    <img src="{{ article.image.url }}" alt="{{ article.title }}"
+                         class="w-full h-full object-cover transition duration-500 group-hover:scale-110 group-hover:opacity-75">
+                {% else %}
+                    <div class="w-full h-full bg-gray-800 flex items-center justify-center text-gray-600">
+                        <i class="fas fa-newspaper text-5xl"></i>
+                    </div>
+                {% endif %}
+                <div class="absolute top-4 left-4 bg-bereg-neon text-white text-xs font-bold px-3 py-1 uppercase">
+                    {{ article.get_category_display }}
+                </div>
             </div>
-            <h3 class="text-xl font-bold mb-2 group-hover:text-bereg-neon transition">Вечер живой музыки</h3>
-            <p class="text-gray-400 text-sm mb-3">Каждую пятницу в нашем зале выступают лучшие джазовые коллективы города.</p>
-            <span class="text-gray-500 text-xs uppercase font-bold">Пт & Сб • 20:00</span>
+            <h3 class="text-xl font-bold mb-2 group-hover:text-bereg-neon transition">{{ article.title }}</h3>
+            <p class="text-gray-400 text-sm mb-3">{{ article.excerpt|truncatechars:100 }}</p>
+            <span class="text-gray-500 text-xs uppercase font-bold">{{ article.created_at|date:"d F" }}</span>
+        </a>
+        {% empty %}
+        <div class="col-span-3 text-center text-gray-600 py-8">
+            <i class="fas fa-newspaper text-4xl mb-3 block opacity-20"></i>
+            Новостей пока нет — добавьте их в <a href="/admin/" class="text-bereg-neon hover:underline">админке</a>
         </div>
-        <div class="group cursor-pointer">
-            <div class="overflow-hidden mb-4 relative h-64 bg-gray-800 flex items-center justify-center text-gray-600">
-                <i class="fas fa-cocktail text-5xl"></i>
-                <div class="absolute top-4 left-4 bg-white text-black text-xs font-bold px-3 py-1 uppercase">Бар</div>
-            </div>
-            <h3 class="text-xl font-bold mb-2 group-hover:text-bereg-neon transition">Обновление барной карты</h3>
-            <p class="text-gray-400 text-sm mb-3">Попробуйте наши новые авторские коктейли «Неоновый закат».</p>
-            <span class="text-gray-500 text-xs uppercase font-bold">Постоянное меню</span>
-        </div>
-        <div class="group cursor-pointer">
-            <div class="overflow-hidden mb-4 relative h-64 bg-gray-800 flex items-center justify-center text-gray-600">
-                <i class="fas fa-utensils text-5xl"></i>
-                <div class="absolute top-4 left-4 bg-bereg-brick text-white text-xs font-bold px-3 py-1 uppercase">Кухня</div>
-            </div>
-            <h3 class="text-xl font-bold mb-2 group-hover:text-bereg-neon transition">Сезонное меню</h3>
-            <p class="text-gray-400 text-sm mb-3">Шеф-повар представил новые блюда из сезонных продуктов.</p>
-            <span class="text-gray-500 text-xs uppercase font-bold">Доступно сейчас</span>
-        </div>
+        {% endfor %}
     </div>
 </div>
+
 {% endblock %}

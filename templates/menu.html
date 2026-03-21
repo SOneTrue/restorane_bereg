@@ -2,61 +2,68 @@
 {% block title %}Ресторан "Берег" — Меню{% endblock %}
 
 {% block content %}
+
 <div class="bg-bereg-gray py-20 text-center border-b border-gray-800">
-    <h1 class="text-5xl font-sans font-extrabold mb-4 uppercase tracking-tight">Наше <span class="text-bereg-neon">Меню</span></h1>
+    <h1 class="text-5xl font-sans font-extrabold mb-4 uppercase tracking-tight">
+        Наше <span class="text-bereg-neon">Меню</span>
+    </h1>
     <p class="text-gray-400 max-w-2xl mx-auto">Авторские блюда, приготовленные с душой и вниманием к деталям</p>
 </div>
 
 <div class="container mx-auto px-4 py-12">
+
+    <!-- Фильтры категорий из БД -->
     <div class="flex justify-center space-x-4 mb-16 flex-wrap gap-y-4">
-        <button class="px-8 py-3 bg-bereg-neon text-white font-bold uppercase tracking-wider hover:shadow-neon transition duration-300">Все</button>
-        <button class="px-8 py-3 bg-transparent border border-gray-700 text-gray-400 font-bold uppercase tracking-wider hover:border-bereg-neon hover:text-white transition duration-300">Закуски</button>
-        <button class="px-8 py-3 bg-transparent border border-gray-700 text-gray-400 font-bold uppercase tracking-wider hover:border-bereg-neon hover:text-white transition duration-300">Горячее</button>
-        <button class="px-8 py-3 bg-transparent border border-gray-700 text-gray-400 font-bold uppercase tracking-wider hover:border-bereg-neon hover:text-white transition duration-300">Напитки</button>
+        <a href="{% url 'menu' %}"
+           class="px-8 py-3 {% if not current_category %}bg-bereg-neon text-white{% else %}bg-transparent border border-gray-700 text-gray-400 hover:border-bereg-neon hover:text-white{% endif %} font-bold uppercase tracking-wider transition duration-300">
+            Все
+        </a>
+        {% for cat in categories %}
+        <a href="{% url 'menu' %}?category={{ cat.slug }}"
+           class="px-8 py-3 {% if current_category == cat.slug %}bg-bereg-neon text-white{% else %}bg-transparent border border-gray-700 text-gray-400 hover:border-bereg-neon hover:text-white{% endif %} font-bold uppercase tracking-wider transition duration-300">
+            {{ cat.name }}
+        </a>
+        {% endfor %}
     </div>
 
+    <!-- Сетка блюд из БД -->
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-        <!-- Блюдо 1 -->
-        <div class="bg-bereg-gray overflow-hidden group border border-gray-800 hover:border-bereg-neon transition duration-300">
+        {% for dish in dishes %}
+        <a href="{% url 'dish_detail' dish.id %}"
+           class="bg-bereg-gray overflow-hidden group border border-gray-800 hover:border-bereg-neon transition duration-300 block">
             <div class="h-64 overflow-hidden relative">
-                <img src="https://image.qwenlm.ai/public_source/76d0b6b1-bf04-41d4-9af3-b80bdfc992ab/18daf0ed7-e69e-4c60-bad1-7cdeaa65db42.png" alt="Дорадо" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
-                <div class="absolute bottom-0 right-0 bg-bereg-neon text-white px-4 py-2 font-bold text-lg">850 ₽</div>
+                {% if dish.image %}
+                    <img src="{{ dish.image.url }}" alt="{{ dish.name }}"
+                         class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                {% else %}
+                    <div class="w-full h-full bg-gray-800 flex items-center justify-center text-gray-600">
+                        <i class="fas fa-utensils text-4xl"></i>
+                    </div>
+                {% endif %}
+                <div class="absolute bottom-0 right-0 bg-bereg-neon text-white px-4 py-2 font-bold text-lg">
+                    {{ dish.price }} ₽
+                </div>
             </div>
             <div class="p-6">
                 <div class="flex justify-between items-start mb-2">
-                    <h3 class="text-xl font-bold text-white">Дорадо на гриле</h3>
+                    <h3 class="text-xl font-bold text-white">{{ dish.name }}</h3>
+                    {% if dish.is_hit %}
                     <span class="text-xs text-gray-500 border border-gray-700 px-2 py-1">ХИТ</span>
+                    {% endif %}
                 </div>
-                <p class="text-gray-400 text-sm mb-6">Подается с запеченным картофелем, лимонным соусом и свежей зеленью.</p>
-                <button class="w-full bg-transparent border border-gray-600 text-white py-3 uppercase text-xs font-bold tracking-widest hover:bg-white hover:text-black transition duration-300">В заказ</button>
+                <p class="text-gray-400 text-sm mb-6 line-clamp-2">{{ dish.description }}</p>
+                <div class="w-full text-center bg-transparent border border-gray-600 text-white py-3 uppercase text-xs font-bold tracking-widest group-hover:bg-white group-hover:text-black transition duration-300">
+                    Подробнее
+                </div>
             </div>
+        </a>
+        {% empty %}
+        <div class="col-span-3 text-center text-gray-600 py-16">
+            <i class="fas fa-utensils text-5xl mb-4 block opacity-20"></i>
+            Блюда не найдены — добавьте их в <a href="/admin/" class="text-bereg-neon hover:underline">админке</a>
         </div>
-
-        <!-- Блюдо 2 -->
-        <div class="bg-bereg-gray overflow-hidden group border border-gray-800 hover:border-bereg-neon transition duration-300">
-            <div class="h-64 overflow-hidden relative">
-                <img src="https://image.qwenlm.ai/public_source/76d0b6b1-bf04-41d4-9af3-b80bdfc992ab/10e6d5e72-086d-4d1c-95a6-ab27a7e8746c.png" alt="Паста" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
-                <div class="absolute bottom-0 right-0 bg-bereg-neon text-white px-4 py-2 font-bold text-lg">720 ₽</div>
-            </div>
-            <div class="p-6">
-                <h3 class="text-xl font-bold text-white mb-2">Паста с морепродуктами</h3>
-                <p class="text-gray-400 text-sm mb-6">Спагетти, мидии, креветки, томаты черри, чеснок и белое вино.</p>
-                <button class="w-full bg-transparent border border-gray-600 text-white py-3 uppercase text-xs font-bold tracking-widest hover:bg-white hover:text-black transition duration-300">В заказ</button>
-            </div>
-        </div>
-
-        <!-- Блюдо 3 -->
-        <div class="bg-bereg-gray overflow-hidden group border border-gray-800 hover:border-bereg-neon transition duration-300">
-            <div class="h-64 overflow-hidden relative bg-gray-800 flex items-center justify-center text-gray-600">
-                <i class="fas fa-drumstick-bite text-4xl"></i>
-                <div class="absolute bottom-0 right-0 bg-bereg-neon text-white px-4 py-2 font-bold text-lg">1200 ₽</div>
-            </div>
-            <div class="p-6">
-                <h3 class="text-xl font-bold text-white mb-2">Стейк Рибай</h3>
-                <p class="text-gray-400 text-sm mb-6">Мраморная говядина зернового откорма, подается с перечным соусом.</p>
-                <button class="w-full bg-transparent border border-gray-600 text-white py-3 uppercase text-xs font-bold tracking-widest hover:bg-white hover:text-black transition duration-300">В заказ</button>
-            </div>
-        </div>
+        {% endfor %}
     </div>
+
 </div>
 {% endblock %}
