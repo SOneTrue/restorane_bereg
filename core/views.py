@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .models import Dish, Category, NewsArticle
+from .models import Dish, Category, NewsArticle, Reservation  # ← добавлен Reservation
 
 
 def home(request):
@@ -13,9 +13,7 @@ def news(request):
     articles = NewsArticle.objects.filter(is_published=True)
     if category:
         articles = articles.filter(category=category)
-
     featured = NewsArticle.objects.filter(is_published=True, is_featured=True).first()
-
     return render(request, 'news.html', {
         'news_list': articles,
         'featured_news': featured,
@@ -34,7 +32,6 @@ def menu(request):
     dishes = Dish.objects.filter(is_available=True).select_related('category')
     if category_slug:
         dishes = dishes.filter(category__slug=category_slug)
-
     return render(request, 'menu.html', {
         'dishes': dishes,
         'categories': categories,
@@ -47,7 +44,6 @@ def dish_detail(request, pk):
     related_dishes = Dish.objects.filter(
         category=dish.category, is_available=True
     ).exclude(pk=pk)[:3]
-
     return render(request, 'dish_detail.html', {
         'dish': dish,
         'related_dishes': related_dishes,
@@ -56,9 +52,26 @@ def dish_detail(request, pk):
 
 def reservation(request):
     if request.method == 'POST':
-        name = request.POST.get('name')
-        messages.success(request, f'Спасибо, {name}! Ваша заявка принята.')
+        name = request.POST.get('name', '').strip()
+        phone = request.POST.get('phone', '').strip()
+        date = request.POST.get('date')
+        time = request.POST.get('time')
+        guests = request.POST.get('guests', '2')
+        comment = request.POST.get('comment', '').strip()
+
+        # ← сохраняем заявку в БД
+        Reservation.objects.create(
+            name=name,
+            phone=phone,
+            date=date,
+            time=time,
+            guests=guests,
+            comment=comment,
+        )
+
+        messages.success(request, f'Спасибо, {name}! Ваша заявка принята — мы свяжемся с вами.')
         return redirect('home')
+
     return render(request, 'reservation.html')
 
 
