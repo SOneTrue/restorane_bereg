@@ -13,4 +13,6 @@ urlpatterns = [
     path('menu/<int:pk>/', views.dish_detail, name='dish_detail'),
     path('reservation/', views.reservation, name='reservation'),
     path('contacts/', views.contacts, name='contacts'),
+    path('privacy/', views.privacy, name='privacy'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

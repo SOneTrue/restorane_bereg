@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% block title %}Политика конфиденциальности — Ресторан "Берег"{% endblock %}
+
+{% block content %}
+<div class="bg-bereg-gray py-16 text-center border-b border-gray-800">
+    <h1 class="text-4xl font-sans font-extrabold mb-4 uppercase tracking-tight">
+        Политика <span class="text-bereg-neon">Конфиденциальности</span>
+    </h1>
+    <p class="text-gray-400 max-w-2xl mx-auto">Последнее обновление: март 2025 года</p>
+</div>
+
+<div class="container mx-auto px-4 py-16 max-w-3xl">
+
+    <!-- Хлебные крошки -->
+    <nav class="flex items-center space-x-2 text-sm text-gray-500 mb-12">
+        <a href="{% url 'home' %}" class="hover:text-bereg-neon transition">Главная</a>
+        <span>/</span>
+        <span class="text-gray-300">Политика конфиденциальности</span>
+    </nav>
+
+    <div class="space-y-10 text-gray-300 leading-relaxed">
+
+        <!-- 1 -->
+        <section>
+            <h2 class="text-2xl font-sans font-bold text-white mb-4 flex items-center gap-3">
+                <span class="text-bereg-neon text-lg font-bold">01</span>
+                Общие положения
+            </h2>
+            <div class="border-l-2 border-gray-800 pl-6 space-y-3">
+                <p>Настоящая политика конфиденциальности регулирует порядок обработки и защиты персональных данных пользователей, оставляющих заявки на бронирование столиков в ресторане <strong class="text-white">"Берег"</strong>.</p>
+                <p>Использование сайта означает безоговорочное согласие пользователя с данной политикой и условиями обработки его персональных данных.</p>
+            </div>
+        </section>
+
+        <div class="border-t border-gray-800"></div>
+
+        <!-- 2 -->
+        <section>
+            <h2 class="text-2xl font-sans font-bold text-white mb-4 flex items-center gap-3">
+                <span class="text-bereg-neon text-lg font-bold">02</span>
+                Какие данные мы собираем
+            </h2>
+            <div class="border-l-2 border-gray-800 pl-6 space-y-3">
+                <p>При оформлении заявки на бронирование мы можем запрашивать следующие данные:</p>
+                <ul class="space-y-2 mt-3">
+                    <li class="flex items-start gap-3">
+                        <span class="text-bereg-neon mt-1">—</span>
+                        <span><strong class="text-white">Имя</strong> — для персонального обращения и идентификации брони</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-bereg-neon mt-1">—</span>
+                        <span><strong class="text-white">Номер телефона</strong> — для подтверждения бронирования и связи с гостем</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-bereg-neon mt-1">—</span>
+                        <span><strong class="text-white">Дата и время</strong> — для организации визита</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-bereg-neon mt-1">—</span>
+                        <span><strong class="text-white">Количество гостей и комментарий</strong> — для подготовки стола и учёта пожеланий</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="border-t border-gray-800"></div>
+
+        <!-- 3 -->
+        <section>
+            <h2 class="text-2xl font-sans font-bold text-white mb-4 flex items-center gap-3">
+                <span class="text-bereg-neon text-lg font-bold">03</span>
+                Цели обработки данных
+            </h2>
+            <div class="border-l-2 border-gray-800 pl-6 space-y-3">
+                <p>Персональные данные используются исключительно для следующих целей:</p>
+                <ul class="space-y-2 mt-3">
+                    <li class="flex items-start gap-3">
+                        <span class="text-bereg-neon mt-1">—</span>
+                        <span>Обработка и подтверждение заявок на бронирование столиков</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-bereg-neon mt-1">—</span>
+                        <span>Связь с гостем для уточнения деталей визита</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-bereg-neon mt-1">—</span>
+                        <span>Обеспечение качественного обслуживания</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-bereg-neon mt-1">—</span>
+                        <span>Информирование об изменениях в работе ресторана (при наличии согласия)</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="border-t border-gray-800"></div>
+
+        <!-- 4 -->
+        <section>
+            <h2 class="text-2xl font-sans font-bold text-white mb-4 flex items-center gap-3">
+                <span class="text-bereg-neon text-lg font-bold">04</span>
+                Хранение и защита данных
+            </h2>
+            <div class="border-l-2 border-gray-800 pl-6 space-y-3">
+                <p>Мы принимаем все необходимые меры для защиты ваших персональных данных от несанкционированного доступа, изменения, раскрытия или уничтожения.</p>
+                <p>Данные хранятся в защищённой базе данных и доступны только уполномоченному персоналу ресторана. Передача данных третьим лицам не осуществляется.</p>
+                <p>Срок хранения данных — не более <strong class="text-white">1 года</strong> с момента последнего взаимодействия, после чего данные удаляются.</p>
+            </div>
+        </section>
+
+        <div class="border-t border-gray-800"></div>
+
+        <!-- 5 -->
+        <section>
+            <h2 class="text-2xl font-sans font-bold text-white mb-4 flex items-center gap-3">
+                <span class="text-bereg-neon text-lg font-bold">05</span>
+                Права пользователя
+            </h2>
+            <div class="border-l-2 border-gray-800 pl-6 space-y-3">
+                <p>В соответствии с Федеральным законом № 152-ФЗ «О персональных данных» вы имеете право:</p>
+                <ul class="space-y-2 mt-3">
+                    <li class="flex items-start gap-3">
+                        <span class="text-bereg-neon mt-1">—</span>
+                        <span>Получить информацию об обрабатываемых данных</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-bereg-neon mt-1">—</span>
+                        <span>Потребовать уточнения, блокировки или уничтожения своих данных</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-bereg-neon mt-1">—</span>
+                        <span>Отозвать согласие на обработку персональных данных в любой момент</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-bereg-neon mt-1">—</span>
+                        <span>Обратиться с жалобой в Роскомнадзор</span>
+                    </li>
+                </ul>
+                <p class="mt-3">Для реализации прав обратитесь к нам по контактам на странице
+                    <a href="{% url 'contacts' %}" class="text-bereg-neon hover:underline">Контакты</a>.
+                </p>
+            </div>
+        </section>
+
+        <div class="border-t border-gray-800"></div>
+
+        <!-- 6 -->
+        <section>
+            <h2 class="text-2xl font-sans font-bold text-white mb-4 flex items-center gap-3">
+                <span class="text-bereg-neon text-lg font-bold">06</span>
+                Контактная информация
+            </h2>
+            <div class="border-l-2 border-gray-800 pl-6 space-y-3">
+                <p>По вопросам, связанным с обработкой персональных данных, обращайтесь:</p>
+                <ul class="space-y-2 mt-3">
+                    <li class="flex items-start gap-3">
+                        <span class="text-bereg-neon mt-1">—</span>
+                        <span><strong class="text-white">Организация:</strong> Ресторан "Берег"</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-bereg-neon mt-1">—</span>
+                        <span><strong class="text-white">Телефон:</strong> +7 (999) 000-00-00</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Кнопка назад -->
+    <div class="mt-16 flex items-center justify-between">
+        <a href="{% url 'reservation' %}"
+           class="flex items-center gap-3 text-gray-400 hover:text-bereg-neon transition font-bold uppercase tracking-wider text-sm">
+            <i class="fas fa-arrow-left"></i> Вернуться к бронированию
+        </a>
+        <a href="{% url 'home' %}"
+           class="bg-bereg-neon text-white px-8 py-3 font-bold uppercase tracking-wider hover:bg-white hover:text-bereg-neon transition duration-300">
+            На главную
+        </a>
+    </div>
+
+</div>
+{% endblock %}

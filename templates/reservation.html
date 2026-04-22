@@ -58,6 +58,21 @@
                     </select>
                 </div>
 
+                <!-- Чекбокс политики конфиденциальности -->
+                <div class="mb-8">
+                    <label class="flex items-start gap-3 cursor-pointer group">
+                        <input type="checkbox" name="agree_privacy" required
+                               class="mt-1 w-5 h-5 flex-shrink-0 accent-[#ff0055] cursor-pointer">
+                        <span class="text-gray-400 text-sm leading-relaxed">
+                            Я согласен(а) с
+                            <a href="{% url 'privacy' %}" target="_blank"
+                               class="text-bereg-neon hover:underline font-semibold">
+                                политикой конфиденциальности
+                            </a>
+                            и даю согласие на обработку персональных данных
+                        </span>
+                    </label>
+                </div>
                 <button type="submit"
                         class="w-full bg-bereg-neon text-white font-bold py-4 uppercase tracking-widest hover:bg-white hover:text-bereg-neon transition duration-300">
                     Подтвердить

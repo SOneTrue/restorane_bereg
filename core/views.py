@@ -77,3 +77,6 @@ def reservation(request):
 
 def contacts(request):
     return render(request, 'contacts.html')
+
+def privacy(request):
+    return render(request, 'privacy.html')
