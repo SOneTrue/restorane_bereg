@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from .models import Category, Dish, NewsArticle, Reservation
-
+from .models import NewsSubscriber
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -67,3 +67,11 @@ class ReservationAdmin(admin.ModelAdmin):
             color, obj.get_status_display()
         )
     status_badge.short_description = 'Статус'
+
+
+@admin.register(NewsSubscriber)
+class NewsSubscriberAdmin(admin.ModelAdmin):
+    list_display = ('email', 'created_at')
+    readonly_fields = ('created_at',)
+    search_fields = ('email',)
+

@@ -98,13 +98,18 @@
                 <h3 class="text-2xl font-bold mb-4 text-white">Подпишитесь на новости</h3>
                 <p class="text-gray-400">Получайте информацию о новых блюдах, акциях и событиях первыми</p>
             </div>
-            <div class="flex flex-col md:flex-row gap-4">
-                <input type="email" placeholder="Ваш email"
-                       class="flex-1 bg-bereg-dark border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-bereg-neon transition">
-                <button class="bg-bereg-neon text-white px-8 py-3 font-bold uppercase tracking-wider hover:bg-white hover:text-bereg-neon transition duration-300">
-                    Подписаться
-                </button>
-            </div>
+                <form method="POST" action="{% url 'subscribe' %}">
+                    {% csrf_token %}
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <input type="email" name="email" required
+                               placeholder="Ваш email"
+                               class="flex-1 bg-bereg-dark border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-bereg-neon transition">
+                        <button type="submit"
+                                class="bg-bereg-neon text-white px-8 py-3 font-bold uppercase tracking-wider hover:bg-white hover:text-bereg-neon transition duration-300">
+                            Подписаться
+                        </button>
+                    </div>
+                </form>
         </div>
     </div>
 

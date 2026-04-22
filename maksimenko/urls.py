@@ -14,5 +14,6 @@ urlpatterns = [
     path('reservation/', views.reservation, name='reservation'),
     path('contacts/', views.contacts, name='contacts'),
     path('privacy/', views.privacy, name='privacy'),
+    path('subscribe/', views.subscribe, name='subscribe'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

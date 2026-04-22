@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .models import Dish, Category, NewsArticle, Reservation  # ← добавлен Reservation
+from django.shortcuts import render, redirect, get_object_or_404
+
+from .models import Dish, Category, NewsArticle, Reservation, NewsSubscriber
 
 
 def home(request):
@@ -78,5 +79,18 @@ def reservation(request):
 def contacts(request):
     return render(request, 'contacts.html')
 
+
 def privacy(request):
     return render(request, 'privacy.html')
+
+
+def subscribe(request):
+    if request.method == 'POST':
+        email = request.POST.get('email', '').strip()
+        if email:
+            obj, created = NewsSubscriber.objects.get_or_create(email=email)
+            if created:
+                messages.success(request, f'{email} — вы успешно подписались!')
+            else:
+                messages.info(request, 'Этот email уже подписан.')
+    return redirect('news')

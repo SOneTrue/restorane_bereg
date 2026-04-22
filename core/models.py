@@ -101,3 +101,14 @@ class Reservation(models.Model):
 
     def __str__(self):
         return f'{self.name} — {self.date} {self.time}'
+
+class NewsSubscriber(models.Model):
+    email = models.EmailField('Email', unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Подписчик'
+        verbose_name_plural = 'Подписчики на новости'
+
+    def __str__(self):
+        return self.email
