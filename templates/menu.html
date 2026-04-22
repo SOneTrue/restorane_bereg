@@ -31,12 +31,12 @@
         {% for dish in dishes %}
         <a href="{% url 'dish_detail' dish.id %}"
            class="bg-bereg-gray overflow-hidden group border border-gray-800 hover:border-bereg-neon transition duration-300 block">
-            <div class="h-64 overflow-hidden relative">
+            <div class="relative bg-gray-900">
                 {% if dish.image %}
                     <img src="{{ dish.image.url }}" alt="{{ dish.name }}"
-                         class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                         class="w-full h-auto block group-hover:opacity-90 transition duration-500">
                 {% else %}
-                    <div class="w-full h-full bg-gray-800 flex items-center justify-center text-gray-600">
+                    <div class="h-48 flex items-center justify-center text-gray-600">
                         <i class="fas fa-utensils text-4xl"></i>
                     </div>
                 {% endif %}

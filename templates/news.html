@@ -2,7 +2,6 @@
 {% block title %}Ресторан "Берег" — Новости{% endblock %}
 
 {% block content %}
-<!-- Шапка страницы -->
 <div class="bg-bereg-gray py-20 text-center border-b border-gray-800">
     <h1 class="text-5xl font-sans font-extrabold mb-4 uppercase tracking-tight">
         Новости <span class="text-bereg-neon">Ресторана</span>
@@ -12,7 +11,7 @@
 
 <div class="container mx-auto px-4 py-12">
 
-    <!-- Фильтры категорий -->
+    <!-- Фильтры -->
     <div class="flex justify-center space-x-4 mb-16 flex-wrap gap-y-4">
         <a href="{% url 'news' %}" class="px-8 py-3 {% if not current_category %}bg-bereg-neon text-white{% else %}bg-transparent border border-gray-700 text-gray-400 hover:border-bereg-neon hover:text-white{% endif %} font-bold uppercase tracking-wider transition duration-300">Все</a>
         <a href="{% url 'news' %}?category=events" class="px-8 py-3 {% if current_category == 'events' %}bg-bereg-neon text-white{% else %}bg-transparent border border-gray-700 text-gray-400 hover:border-bereg-neon hover:text-white{% endif %} font-bold uppercase tracking-wider transition duration-300">События</a>
@@ -28,11 +27,13 @@
             <i class="fas fa-star text-bereg-neon mr-3"></i>Главная новость
         </h2>
         <a href="{% url 'news_detail' featured_news.id %}" class="grid md:grid-cols-2 gap-0 bg-bereg-gray border border-gray-800 overflow-hidden hover:border-bereg-neon transition duration-300 block">
-            <div class="h-80 md:h-auto overflow-hidden">
+            <!-- Картинка: сохраняем пропорции, без обрезки -->
+            <div class="bg-gray-900 flex items-center justify-center overflow-hidden">
                 {% if featured_news.image %}
-                    <img src="{{ featured_news.image.url }}" alt="{{ featured_news.title }}" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                    <img src="{{ featured_news.image.url }}" alt="{{ featured_news.title }}"
+                         class="w-full object-contain max-h-96 hover:opacity-90 transition duration-500">
                 {% else %}
-                    <div class="w-full h-full bg-gray-800 flex items-center justify-center text-gray-600">
+                    <div class="w-full h-64 flex items-center justify-center text-gray-600">
                         <i class="fas fa-newspaper text-6xl"></i>
                     </div>
                 {% endif %}
@@ -58,11 +59,13 @@
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for article in news_list %}
             <a href="{% url 'news_detail' article.id %}" class="bg-bereg-gray overflow-hidden group border border-gray-800 hover:border-bereg-neon transition duration-300 block">
-                <div class="h-48 overflow-hidden relative">
+                <!-- Картинка: сохраняем пропорции -->
+                <div class="relative bg-gray-900 flex items-center justify-center overflow-hidden">
                     {% if article.image %}
-                        <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                        <img src="{{ article.image.url }}" alt="{{ article.title }}"
+                             class="w-full object-contain max-h-48 group-hover:opacity-90 transition duration-500">
                     {% else %}
-                        <div class="w-full h-full bg-gray-800 flex items-center justify-center text-gray-600">
+                        <div class="h-48 flex items-center justify-center text-gray-600">
                             <i class="fas fa-newspaper text-4xl"></i>
                         </div>
                     {% endif %}
@@ -88,7 +91,7 @@
         </div>
     </div>
 
-    <!-- Подписка на новости -->
+    <!-- Подписка -->
     <div class="mt-8 bg-bereg-gray border border-gray-800 p-8 md:p-12">
         <div class="grid md:grid-cols-2 gap-8 items-center">
             <div>
