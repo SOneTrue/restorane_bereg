@@ -6,14 +6,14 @@ from .models import NewsSubscriber
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug')
-    prepopulated_fields = {'slug': ('name',)}  # slug заполняется автоматически
+    prepopulated_fields = {'slug': ('name',)}
 
 
 @admin.register(Dish)
 class DishAdmin(admin.ModelAdmin):
     list_display = ('preview_image', 'name', 'category', 'price', 'is_available', 'is_hit')
     list_display_links = ('name',)
-    list_editable = ('is_available', 'is_hit')   # редактировать прямо в списке
+    list_editable = ('is_available', 'is_hit')
     list_filter = ('category', 'is_available', 'is_hit')
     search_fields = ('name', 'description')
 
@@ -48,7 +48,7 @@ class NewsArticleAdmin(admin.ModelAdmin):
 @admin.register(Reservation)
 class ReservationAdmin(admin.ModelAdmin):
     list_display = ('name', 'phone', 'date', 'time', 'guests', 'status_badge', 'status', 'created_at')
-    list_display_links = ('name',)           # ← обязательно, иначе конфликт с list_editable
+    list_display_links = ('name',)
     list_editable = ('status',)
     list_filter = ('status', 'date')
     search_fields = ('name', 'phone')
