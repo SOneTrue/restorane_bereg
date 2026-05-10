@@ -3,7 +3,7 @@ version: "3.9"
 services:
   web:
     build: .
-    container_name: lukomorie_web
+    container_name: restoran_bereg
     ports:
       - "8081:8001"
     volumes:
