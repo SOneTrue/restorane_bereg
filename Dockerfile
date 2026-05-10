@@ -1,4 +1,3 @@
-# Dockerfile
 FROM python:3.12-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -15,8 +14,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /app/
 
+RUN mkdir -p /app/static /app/media /app/staticfiles
 RUN python manage.py collectstatic --noinput
 
 EXPOSE 8001
 
-CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8001", "--workers", "3"]
+CMD ["gunicorn", "maksimenko.wsgi:application", "--bind", "0.0.0.0:8001", "--workers", "3"]
