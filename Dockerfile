@@ -14,9 +14,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /app/
 
-RUN mkdir -p /app/static /app/media /app/staticfiles
+RUN mkdir -p /app/staticfiles /app/media
 RUN python manage.py collectstatic --noinput
 
 EXPOSE 8001
 
-CMD ["gunicorn", "maksimenko.wsgi:application", "--bind", "0.0.0.0:8001", "--workers", "3"]
+CMD ["python", "-m", "gunicorn", "maksimenko.wsgi:application", "--bind", "0.0.0.0:8001", "--workers", "3"]
